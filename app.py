@@ -1,6 +1,6 @@
 
 import cv2
-from streamlit_webrtc import VideoTransformerBase, webrtc_streamer, AudioProcessorBase
+from streamlit_webrtc import  RTCConfiguration, VideoTransformerBase, webrtc_streamer, AudioProcessorBase
 from DistanceEstimation import *
 from typing import Awaitable, Callable, Generic, List, Optional, TypeVar
 import streamlit as st
@@ -12,6 +12,9 @@ new_audio_file = open('audio.mp3', 'rb')
 audio_bytes = new_audio_file.read()
 st.audio(audio_bytes, format='audio/ogg')
 new_audio_file.close()    
+RTC_CONFIGURATION = RTCConfiguration(
+    {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
+)
 
 # count = st_autorefresh(interval=2500, limit=1000000, key="fizzbuzzcounter")
 
