@@ -61,4 +61,5 @@ if __name__ == "__main__":
     rtc_configuration=RTC_CONFIGURATION,
     media_stream_constraints={"video": True, "audio": False},
     video_processor_factory=VideoTransformer,
+    audio_processor_factory=AudioProcessor,
     async_processing=True,)
