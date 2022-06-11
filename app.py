@@ -1,0 +1,56 @@
+
+import cv2
+from streamlit_webrtc import VideoTransformerBase, webrtc_streamer, AudioProcessorBase
+from DistanceEstimation import *
+from typing import Awaitable, Callable, Generic, List, Optional, TypeVar
+import streamlit as st
+from streamlit_autorefresh import st_autorefresh
+import time
+
+audio_counter = 0
+new_audio_file = open('audio.mp3', 'rb')
+audio_bytes = new_audio_file.read()
+st.audio(audio_bytes, format='audio/ogg')
+new_audio_file.close()    
+
+# count = st_autorefresh(interval=2500, limit=1000000, key="fizzbuzzcounter")
+
+import av
+from tts import *
+
+
+
+class VideoTransformer(VideoTransformerBase):
+    def __init__(self) -> None:
+        super().__init__()
+        self.frame_count = 0
+
+
+    def transform(self, frame):
+        img = frame.to_ndarray(format="bgr24")
+        new_img = get_frame_output(img, self.frame_count)
+        return new_img
+
+    def recv(self, frame: av.VideoFrame) -> av.VideoFrame:
+        new_image = self.transform(frame)
+        
+        return av.VideoFrame.from_ndarray(new_image, format="bgr24")
+
+class AudioProcessor(AudioProcessorBase):
+
+    def reset_audio(self):
+        time.sleep(0.1)
+        self.new_audio_file = open('audio.mp3', 'rb')
+        self.audio_bytes = self.new_audio_file.read()
+        print(len(self.audio_bytes))
+        st.audio(self.audio_bytes, format='audio/ogg')
+        self.new_audio_file.close() 
+        
+    async def recv_queued(self, frames: List[av.AudioFrame]) -> List[av.AudioFrame]:
+        get_audio()
+        self.reset_audio()
+        return []
+
+if __name__ == "__main__":
+    # webrtc_streamer(key="example", video_processor_factory=VideoTransformer)
+    webrtc_streamer(key="example", video_processor_factory=VideoTransformer, audio_processor_factory=AudioProcessor)
