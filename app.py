@@ -42,7 +42,7 @@ class VideoTransformer(VideoTransformerBase):
 class AudioProcessor(AudioProcessorBase):
 
     def reset_audio(self):
-        time.sleep(0.1)
+        # time.sleep(0.1)
         self.new_audio_file = open('audio.mp3', 'rb')
         self.audio_bytes = self.new_audio_file.read()
         print(len(self.audio_bytes))
@@ -62,4 +62,4 @@ if __name__ == "__main__":
     media_stream_constraints={"video": True, "audio": False},
     video_processor_factory=VideoTransformer,
     audio_processor_factory=AudioProcessor,
-    async_processing=True,)
+    )
