@@ -16,7 +16,7 @@ RTC_CONFIGURATION = RTCConfiguration(
     {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
 )
 
-# count = st_autorefresh(interval=2500, limit=1000000, key="fizzbuzzcounter")
+count = st_autorefresh(interval=2500, limit=1000000, key="fizzbuzzcounter")
 
 import av
 from tts import *
