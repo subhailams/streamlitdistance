@@ -1,6 +1,6 @@
 
 import cv2
-from streamlit_webrtc import  RTCConfiguration, VideoTransformerBase, webrtc_streamer, AudioProcessorBase
+from streamlit_webrtc import  WebRtcMode,RTCConfiguration, VideoTransformerBase, webrtc_streamer, AudioProcessorBase
 from DistanceEstimation import *
 from typing import Awaitable, Callable, Generic, List, Optional, TypeVar
 import streamlit as st
@@ -56,4 +56,9 @@ class AudioProcessor(AudioProcessorBase):
 
 if __name__ == "__main__":
     # webrtc_streamer(key="example", video_processor_factory=VideoTransformer)
-    webrtc_streamer(key="example", video_processor_factory=VideoTransformer, audio_processor_factory=AudioProcessor)
+    webrtc_streamer(    key="WYH",
+    mode=WebRtcMode.SENDRECV,
+    rtc_configuration=RTC_CONFIGURATION,
+    media_stream_constraints={"video": True, "audio": False},
+    video_processor_factory=VideoTransformer,
+    async_processing=True,)
